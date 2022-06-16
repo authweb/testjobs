@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jobs Frontend</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		.less {
+			margin: 2rem auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 0.5rem;
+			width: 300px;
+		}
+
+		h4 {
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="less">
+		<button onclick="MyCities();">Показать города</button>
+		<h4>Города:</h4>
+		<span id="ResultCities"></span>
+		<label for="round">Введите число</label>
+		<input type="number" id="round" />
+		<button onclick="RoundFloat();">Округлить число</button>
+		<h4>Результат:</h4>
+		<span id="mathR"></span>
+		<label for="casepc">Введите число</label>
+		<input type="number" id="casepc" />
+		<button onclick="changeText();">Показать падеж</button>
+		<span id="num-case">Компьютер</span>
+		<label for="simplenum">Введите число</label>
+		<input type="number" id="simplenum" />
+		<button onclick="simpleNums();">Проверить число</button>
+		<span id="numSimple"></span>
+		<button onclick="find(arr1, arr2);">Проверить совпадения</button>
+		<span id="identnum"></span>
+	</div>
+
+
+
+	<script>
+
+		/* Написать метод/функцию, который/которая на вход принимает массив городов. В качестве результата возвращает строку, где города разделены запятыми, а в конце стоит точка. */
+
+		function MyCities() {
+			var cities = ['Москва', 'Санкт-петербург', 'Красноярск'];
+			cities = cities.join(', ') + '.';
+			document.getElementById("ResultCities").innerHTML = cities;
+			//console.log(cities);
+		}
+		//spent 5 minutes
+
+		/* Написать метод/функцию, который/которая на вход принимает число (float), а на выходе получает число, округленное до пятерок. */
+
+		function RoundFloat() {
+			var doc = document.getElementById("round").value;
+			doc = parseFloat(doc);
+			var res = Math.ceil(doc / 5) * 5;
+			document.getElementById("mathR").innerHTML = res;
+			//console.log(result);
+		}
+		//spent 15 minutes
+
+		/* Написать метод/функцию, который/которая на вход принимает число (int), а на выходе выдает слово "компьютер" в падеже, соответствующем указанному количеству. */
+
+		//Проверка на падежи
+
+		function pcCase(num, text) {
+			num = Math.abs(num) % 100;
+			var num1 = num % 10;
+			if (num > 10 && num < 20) {
+				return text[2];
+			}//если число больше 10 и меньше 20, то на выводе "компьютеров"
+			if (num1 > 1 && num1 < 5) {
+				return text[1];
+			}//если число больше 1 и меньше 5, то на выводе "компьютера"
+			if (num1 == 1) {
+				return text[0];
+			}//если число равно 1 то на выводе "компьютер"
+			return text[2];
+		}
+		//Функция вывода на экран
+
+		function changeText() {
+			var docCase = document.getElementById("casepc").value;
+			docCase = parseInt(docCase);
+			var res = pcCase(docCase, ['Компьютер', 'Компьютера', 'Компьютеров']);
+			document.getElementById("num-case").innerHTML = res;
+		}
+		//spent 30 minutes
+
+		/*  Написать метод/функцию, который/которая на вход принимает целое число, а на выходе возвращает то, является ли число простым. */
+
+		function simpleNums() {
+			var docCase = document.getElementById("simplenum").value;
+			docCase = parseInt(docCase);
+			var res = 'Простое';
+			for (let i = 2; i < docCase; i++) {
+				if (docCase % i == 0) {
+					res = 'Не простое';
+				}
+			}
+			//console.log(res);
+			document.getElementById('numSimple').innerHTML = res;
+		}
+		// spent 10 minutes
+
+		/* Написать метод, который определяет, какие элементы присутствуют в двух экземплярах в каждом из массивов (= в двух и более, причем в каждом). На вход подаются два массива. На выходе массив с необходимыми совпадениями. Пример: [7, 17, 1, 9, 1, 17, 56, 56, 23], [56, 17, 17, 1, 23, 34, 23, 1, 8, 1] На выходе [1, 17]. */
+
+
+		let arr1 = [17, 17, 3, 4, 5, 6, 6, 9, 9, 10];
+		let arr2 = [1, 9, 9, 9, 17, 17, 6, 6, 8, 1];
+
+		function find(ar1, ar2) {
+
+			let res = [];
+			let ca = ar1.slice(0);
+			for (let i = 0; i < ca.length; i++) {
+				if (res.includes(ca[i])) continue;
+				delete ca[i];
+				if (ca.includes(ar1[i]) && ar2.includes(ar1[i])) {
+					let ca2 = ar2.slice(0);
+					delete ca2[ca2.indexOf(ar1[i])];
+					if (ca2.includes(ar1[i])) {
+						res.push(ar1[i]);
+					}
+				}
+			}
+			document.getElementById("identnum").innerHTML = res;
+		}
+		//spent 30 minutes
+	</script>
+</body>
+
+</html>
